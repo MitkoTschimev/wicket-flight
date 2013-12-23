@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>de.agilecoders.maven</groupId>
+        <artifactId>maven-parent-pom</artifactId>
+        <version>0.3.4</version>
+    </parent>
+
+    <modules>
+        <module>flight-core</module>
+        <module>flight-examples</module>
+    </modules>
+
+
+    <groupId>de.agilecoders.wicket</groupId>
+    <artifactId>wicket-flight-parent</artifactId>
+    <version>0.1</version>
+    <packaging>pom</packaging>
+    <name>wicket-flight-parent</name>
+
+    <description>wicket with twitter flight integration</description>
+    <url>https://github.com/tfiwm/wicket-flight</url>
+
+    <scm>
+        <url>git@github.com:tfiwm/wicket-flight.git</url>
+        <connection>scm:git:git@github.com:tfiwm/wicket-flight.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/:tfiwm/wicket-flight.git</developerConnection>
+        <tag>wicket-flight-parent-0.1</tag>
+    </scm>
+
+</project>
