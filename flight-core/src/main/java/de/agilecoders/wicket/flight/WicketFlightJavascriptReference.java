@@ -14,6 +14,15 @@ import java.util.List;
 public class WicketFlightJavascriptReference extends JavaScriptResourceReference {
     private static final long serialVersionUID = 1L;
 
+    private static final class Holder {
+        private static final WicketFlightJavascriptReference instance = new WicketFlightJavascriptReference();
+        private static final WebjarsJavaScriptResourceReference flight = new WebjarsJavaScriptResourceReference("flight/current/standalone/build.js");
+    }
+
+    static WicketFlightJavascriptReference instance() {
+        return Holder.instance;
+    }
+
     /**
      * Construct.
      */
@@ -29,8 +38,8 @@ public class WicketFlightJavascriptReference extends JavaScriptResourceReference
     public Iterable<? extends HeaderItem> getDependencies() {
         final List<HeaderItem> dependencies = Lists.newArrayList(super.getDependencies());
 
-        dependencies.add(JavaScriptHeaderItem.forReference(new WebjarsJavaScriptResourceReference("flight/flight-1.0.9/flight.min.js")));
-        dependencies.add(JavaScriptHeaderItem.forReference(new WicketFlightManagerJavascriptReference()));
+        dependencies.add(JavaScriptHeaderItem.forReference(Holder.flight));
+        dependencies.add(JavaScriptHeaderItem.forReference(WicketFlightManagerJavascriptReference.instance()));
 
         return dependencies;
     }

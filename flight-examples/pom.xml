@@ -24,10 +24,6 @@
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>de.agilecoders.maven</groupId>
-            <artifactId>maven-parent-config</artifactId>
-        </dependency>
 
         <!-- Flight behavior -->
         <dependency>

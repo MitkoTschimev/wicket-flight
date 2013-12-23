@@ -14,20 +14,22 @@
     <packaging>jar</packaging>
     <name>wicket-flight</name>
 
-    <properties>
-        <jetty.version>7.6.13.v20130916</jetty.version>
-    </properties>
-
     <dependencies>
         <!--  WICKET DEPENDENCIES -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>
             <artifactId>wicket-webjars</artifactId>
+        </dependency>
+
+        <!-- TWITTER FLIGHT DEPENDENCIES -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>flight</artifactId>
+            <version>1.0.9</version>
         </dependency>
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->
@@ -48,12 +50,8 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
     </dependencies>
+
     <build>
         <resources>
             <resource>

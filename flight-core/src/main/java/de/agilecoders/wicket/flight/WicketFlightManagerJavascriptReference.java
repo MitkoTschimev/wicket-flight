@@ -8,6 +8,14 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 public class WicketFlightManagerJavascriptReference extends JavaScriptResourceReference {
     private static final long serialVersionUID = 1L;
 
+    private static final class Holder {
+        private static final WicketFlightManagerJavascriptReference instance = new WicketFlightManagerJavascriptReference();
+    }
+
+    static WicketFlightManagerJavascriptReference instance() {
+        return Holder.instance;
+    }
+
     /**
      * Construct.
      */

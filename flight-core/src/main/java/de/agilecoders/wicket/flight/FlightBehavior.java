@@ -7,7 +7,6 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.lang.Args;
 
 import java.util.Collections;
@@ -18,7 +17,6 @@ import java.util.Map;
  */
 public class FlightBehavior extends Behavior {
 
-    private static final ResourceReference flightReference = new WicketFlightJavascriptReference();
     private final Map<String, IModel<String>> componentData;
     private final String flightComponentName;
 
@@ -74,7 +72,7 @@ public class FlightBehavior extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.render(JavaScriptHeaderItem.forReference(flightReference));
+        response.render(JavaScriptHeaderItem.forReference(WicketFlightJavascriptReference.instance()));
     }
 
     @Override
