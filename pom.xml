@@ -13,10 +13,9 @@
         <module>flight-examples</module>
     </modules>
 
-
     <groupId>de.agilecoders.wicket</groupId>
     <artifactId>wicket-flight-parent</artifactId>
-    <version>0.1</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>wicket-flight-parent</name>
 
@@ -30,4 +29,35 @@
         <tag>wicket-flight-parent-0.1</tag>
     </scm>
 
+    <properties>
+        <enforcer.disable>true</enforcer.disable>
+        <pmd.disable>true</pmd.disable>
+        <jacoco.disable>true</jacoco.disable>
+        <checkstyle.disable>true</checkstyle.disable>
+        <findbugs.disable>true</findbugs.disable>
+
+        <config.version>0.3.4</config.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>de.agilecoders.wicket</groupId>
+                <artifactId>wicket-flight</artifactId>
+                <version>0.1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>de.agilecoders.wicket</groupId>
+                <artifactId>wicket-flight-samples</artifactId>
+                <version>0.1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.agilecoders.maven</groupId>
+            <artifactId>maven-parent-config</artifactId>
+        </dependency>
+    </dependencies>
 </project>

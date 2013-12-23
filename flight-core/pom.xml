@@ -5,26 +5,24 @@
     <parent>
         <groupId>de.agilecoders.wicket</groupId>
         <artifactId>wicket-flight-parent</artifactId>
-        <version>0.1</version>
+        <version>0.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
 
-    <artifactId>wicket-flight-core</artifactId>
-    <packaging>war</packaging>
-    <name>flight-core</name>
+    <artifactId>wicket-flight</artifactId>
+    <packaging>jar</packaging>
+    <name>wicket-flight</name>
 
     <properties>
-        <wicket.version>6.12.0</wicket.version>
         <jetty.version>7.6.13.v20130916</jetty.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <dependencies>
         <!--  WICKET DEPENDENCIES -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
-            <version>${wicket.version}</version>
         </dependency>
 
         <dependency>
@@ -54,7 +52,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>r09</version>
         </dependency>
     </dependencies>
     <build>
