@@ -1,13 +1,12 @@
 package de.agilecoders.wicket.flight;
 
-import org.apache.commons.lang3.StringUtils;
+import de.agilecoders.wicket.flight.util.WicketBehaviorUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.lang.Args;
 
 import java.util.Collections;
 import java.util.Map;
@@ -47,7 +46,7 @@ public class FlightBehavior extends Behavior {
         tag.append("class", "js-flight-component", " ");
 
         if (component.getApplication().usesDevelopmentConfig()) {
-            assertCamelCase(flightComponentName);
+            WicketBehaviorUtils.assertCamelCase(flightComponentName);
         }
 
         tag.put("data-component", flightComponentName);
@@ -57,16 +56,6 @@ public class FlightBehavior extends Behavior {
         }
     }
 
-    /**
-     * flight component names are camel-case
-     *
-     * @param flightComponentName flight component name
-     */
-    private static void assertCamelCase(String flightComponentName) {
-        Args.notNull(flightComponentName, "flight component name");
-        Args.isTrue(flightComponentName.charAt(0) == flightComponentName.toUpperCase().charAt(0), "flight component should be camelcase and start with an uppercase letter");
-        Args.isTrue(StringUtils.isAlphanumeric(flightComponentName), "flight component should only contain alphanumeric character");
-    }
 
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
