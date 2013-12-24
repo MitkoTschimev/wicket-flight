@@ -1,6 +1,6 @@
 package de.agilecoders.wicket;
 
-import de.agilecoders.wicket.webjars.util.WicketWebjars;
+import de.agilecoders.wicket.flight.util.WicketFlight;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
@@ -23,6 +23,6 @@ public class WicketApplication extends WebApplication {
     public void init() {
         super.init();
 
-        WicketWebjars.install(this);
+        WicketFlight.install(this);
     }
 }
