@@ -1,8 +1,7 @@
 package de.agilecoders.wicket;
 
-import de.agilecoders.wicket.flight.FlightBehavior;
+import de.agilecoders.wicket.components.ui.label.rollinglabel.RollingLabel;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class HomePage extends WebPage {
@@ -11,9 +10,6 @@ public class HomePage extends WebPage {
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
-        Label label = new Label("behaviorTest");
-        label.add(new FlightBehavior("TestComponent"));
-
-        add(label);
+        add(new RollingLabel("rollingLabel", "Hover me :)"));
     }
 }
