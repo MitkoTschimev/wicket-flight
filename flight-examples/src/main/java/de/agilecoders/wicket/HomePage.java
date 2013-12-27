@@ -10,6 +10,6 @@ public class HomePage extends WebPage {
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
-        add(new GlowingLabel("rollingLabel", "Hover me :)"));
+        add(new GlowingLabel("glowingLabel", "Hover me :)"));
     }
 }
