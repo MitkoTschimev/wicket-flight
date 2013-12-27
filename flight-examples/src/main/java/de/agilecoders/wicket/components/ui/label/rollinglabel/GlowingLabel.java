@@ -6,10 +6,10 @@ import org.apache.wicket.markup.html.basic.Label;
 /**
  * @author tfiwm
  */
-public class RollingLabel extends Label {
+public class GlowingLabel extends Label {
 
 
-    public RollingLabel(String id, String label) {
+    public GlowingLabel(String id, String label) {
         super(id, label);
         add(new SimpleFlightBehavior());
     }

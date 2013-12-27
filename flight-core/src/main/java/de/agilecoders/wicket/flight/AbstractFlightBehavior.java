@@ -75,6 +75,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
+        response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
+        response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getWicketEventReference()));
         response.render(JavaScriptHeaderItem.forReference(WicketFlightJavascriptReference.instance()));
         addComponentResourceReferences(component, response);
     }

@@ -1,6 +1,6 @@
 package de.agilecoders.wicket;
 
-import de.agilecoders.wicket.components.ui.label.rollinglabel.RollingLabel;
+import de.agilecoders.wicket.components.ui.label.rollinglabel.GlowingLabel;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
@@ -10,6 +10,6 @@ public class HomePage extends WebPage {
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
-        add(new RollingLabel("rollingLabel", "Hover me :)"));
+        add(new GlowingLabel("rollingLabel", "Hover me :)"));
     }
 }

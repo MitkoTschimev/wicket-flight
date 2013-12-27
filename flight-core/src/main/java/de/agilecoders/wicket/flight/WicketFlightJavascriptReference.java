@@ -1,7 +1,6 @@
 package de.agilecoders.wicket.flight;
 
 import com.google.common.collect.Lists;
-import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -16,7 +15,9 @@ public class WicketFlightJavascriptReference extends JavaScriptResourceReference
 
     private static final class Holder {
         private static final WicketFlightJavascriptReference instance = new WicketFlightJavascriptReference();
-        private static final WebjarsJavaScriptResourceReference flight = new WebjarsJavaScriptResourceReference("flight/current/standalone/build.js");
+//        private static final WebjarsJavaScriptResourceReference flight = new WebjarsJavaScriptResourceReference("flight/current/standalone/build.js");
+        //TODO remove FlightJavascriptReference if webjars provides flight as working library
+        private static final FlightJavascriptReference flight = FlightJavascriptReference.instance();
     }
 
     static WicketFlightJavascriptReference instance() {
