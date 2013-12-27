@@ -1,6 +1,6 @@
 package de.agilecoders.wicket.flight;
 
-import de.agilecoders.wicket.flight.util.ComponentNames;
+import de.agilecoders.wicket.flight.util.Names;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -38,7 +38,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
         super.bind(component);
 
         if (component.getApplication().usesDevelopmentConfig()) {
-            ComponentNames.assertValid(getComponentName(component));
+            Names.assertValid(getComponentName(component));
         }
     }
 
@@ -50,7 +50,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
     protected void addCustomComponentData(ComponentTag tag) {
         if (componentData != null) {
             for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-                tag.append("data-fc-" + entry.getKey(), entry.getValue().getObject(), " ");
+                tag.append(Names.COMPONENT_DATA_ATTRIBUTE_NAME + "-" + entry.getKey(),
+                           entry.getValue().getObject(), Names.CLASS_NAME_SPLITTER);
             }
         }
     }
@@ -62,14 +63,14 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * @param tag       the component tag of assigned component
      */
     protected void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
-        tag.put("data-fc", getComponentName(component));
+        tag.put(Names.COMPONENT_DATA_ATTRIBUTE_NAME, getComponentName(component));
     }
 
     @Override
     public void onComponentTag(Component component, ComponentTag tag) {
         super.onComponentTag(component, tag);
 
-        tag.append("class", "js-fc", " ");
+        tag.append("class", Names.JS_CLASS_NAME, Names.CLASS_NAME_SPLITTER);
 
         addRequiredComponentIdentifierAttributes(component, tag);
         addCustomComponentData(tag);

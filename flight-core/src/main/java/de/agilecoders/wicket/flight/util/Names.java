@@ -6,7 +6,11 @@ import org.apache.wicket.util.lang.Args;
 /**
  * @author tfiwm
  */
-public class ComponentNames {
+public class Names {
+
+    public static final String JS_CLASS_NAME = "js-fc";
+    public static final String CLASS_NAME_SPLITTER = " ";
+    public static final String COMPONENT_DATA_ATTRIBUTE_NAME = "data-fc";
 
     /**
      * flight component names are camel-case
