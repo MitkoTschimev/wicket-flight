@@ -1,6 +1,6 @@
 package de.agilecoders.wicket.flight;
 
-import de.agilecoders.wicket.flight.util.WicketBehaviorUtils;
+import de.agilecoders.wicket.flight.util.ComponentNames;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -8,7 +8,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * Construct, uses an empty custom component data map.
      */
     public AbstractFlightBehavior() {
-        this(Collections.<String, IModel<String>>emptyMap());
+        this(null);
     }
 
     /**
@@ -34,31 +33,36 @@ public abstract class AbstractFlightBehavior extends Behavior {
         this.componentData = componentData;
     }
 
+    @Override
+    public void bind(Component component) {
+        super.bind(component);
+
+        if (component.getApplication().usesDevelopmentConfig()) {
+            ComponentNames.assertValid(getComponentName(component));
+        }
+    }
+
     /**
      * Converts the map to html data attributes for the flight component
      *
-     * @param tag
+     * @param tag the component tag of assigned component
      */
     protected void addCustomComponentData(ComponentTag tag) {
-        for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-            tag.append("data-fc-" + entry.getKey(), entry.getValue().getObject(), " ");
+        if (componentData != null) {
+            for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
+                tag.append("data-fc-" + entry.getKey(), entry.getValue().getObject(), " ");
+            }
         }
     }
 
     /**
      * Adds the required identifier attributes which are necessary to work with the flight manager
      *
-     * @param component
-     * @param tag
+     * @param component current assigned component
+     * @param tag       the component tag of assigned component
      */
-    private void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
-        String componentName = getComponentName(component);
-
-        if (component.getApplication().usesDevelopmentConfig()) {
-            WicketBehaviorUtils.assertCamelCase(componentName);
-        }
-
-        tag.put("data-fc", componentName);
+    protected void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
+        tag.put("data-fc", getComponentName(component));
     }
 
     @Override
@@ -78,6 +82,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
         response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
         response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getWicketEventReference()));
         response.render(JavaScriptHeaderItem.forReference(WicketFlightJavascriptReference.instance()));
+
         addComponentResourceReferences(component, response);
     }
 
@@ -85,16 +90,18 @@ public abstract class AbstractFlightBehavior extends Behavior {
     public void detach(Component component) {
         super.detach(component);
 
-        for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-            entry.getValue().detach();
+        if (componentData != null) {
+            for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
+                entry.getValue().detach();
+            }
         }
     }
 
     /**
      * Returns the name for the flight component
      *
-     * @param component
-     * @return
+     * @param component current assigned component
+     * @return the flight component name
      */
     protected abstract String getComponentName(Component component);
 
@@ -102,8 +109,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
     /**
      * Adds the css and javascript references for the flight component
      *
-     * @param component
-     * @param response
+     * @param component current assigned component
+     * @param response  current header response
      */
-    protected abstract void addComponentResourceReferences(Component component, IHeaderResponse response);
+    protected void addComponentResourceReferences(Component component, IHeaderResponse response) {}
 }
