@@ -39,10 +39,10 @@ WicketFlightManager = (function (Wicket, $) {
     /**
      * This function extracts the custom component properties from the backend to the flight component
      *
-     * The attributes must start with component-MY_PROPERTY
+     * The attributes must start with data-fc-MY_PROPERTY
      *
      * @example
-     * <div class="m-mycomponent js-fc" data-fc="mycomponent" data-fc-customproperty="500">
+     * <div class="js-fc" data-fc="mycomponent" data-fc-customproperty="500">
      *     Component content
      * </div>
      *
@@ -51,7 +51,7 @@ WicketFlightManager = (function (Wicket, $) {
      * this.attr.customproperty
      *
      * @example
-     * <div class="m-mycomp2 js-fc" data-fc="mycomp2" data-fc-custom-property-with-minus="500">
+     * <div class="js-fc" data-fc="mycomp2" data-fc-custom-property-with-minus="500">
      *     Component content
      * </div>
      *
@@ -69,13 +69,13 @@ WicketFlightManager = (function (Wicket, $) {
         for (key in options) {
             // jQuery's data() method includes data-* attributes, changing the
             // name from hyphenation to camel case, omitting the "data" part.
-            // e.g. data-fc-foo-bar -> componentFooBar
-            // We want to go one step further and remove the "component" part as
+            // e.g. data-fc-foo-bar -> fcFooBar
+            // We want to go one step further and remove the "fc" part as
             // well.
-            // e.g. componentFooBar -> fooBar
+            // e.g. fcFooBar -> fooBar
 
             if (key.indexOf(COMPONENT_NAME_ATTR) === 0 && key.length > COMPONENT_NAME_ATTR_LENGTH) {
-                // if key starts with "component" and does not equal "component"
+                // if key starts with "fc" and does not equal "fc"
 
                 // omit "COMPONENT_NAME_ATTR" value and change first char to lower case
                 property = key.charAt(COMPONENT_NAME_ATTR_LENGTH).toLowerCase() +
