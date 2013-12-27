@@ -41,7 +41,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
      */
     protected void addCustomComponentData(ComponentTag tag) {
         for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-            tag.append("data-component-" + entry.getKey(), entry.getValue().getObject(), " ");
+            tag.append("data-fc-" + entry.getKey(), entry.getValue().getObject(), " ");
         }
     }
 
@@ -58,14 +58,14 @@ public abstract class AbstractFlightBehavior extends Behavior {
             WicketBehaviorUtils.assertCamelCase(componentName);
         }
 
-        tag.put("data-component", componentName);
+        tag.put("data-fc", componentName);
     }
 
     @Override
     public void onComponentTag(Component component, ComponentTag tag) {
         super.onComponentTag(component, tag);
 
-        tag.append("class", "js-flight-component", " ");
+        tag.append("class", "js-fc", " ");
 
         addRequiredComponentIdentifierAttributes(component, tag);
         addCustomComponentData(tag);

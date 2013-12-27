@@ -1,7 +1,7 @@
 /*jslint browser:true, forin:true, nomen:true, plusplus:true, sloppy:true, maxlen:120, indent:4 */
 /*global Wicket:false, jQuery:false, WicketFlightManager:true */
 
-/* requires component markup <div class="js-flight-component" data-component="ComponentX"></div>
+/* requires component markup <div class="js-fc" data-fc="ComponentX"></div>
  * requires registration WicketFlightManager.registerComponent("ComponentX", ComponentX);
  */
 
@@ -12,13 +12,13 @@ WicketFlightManager = (function (Wicket, $) {
          * The selector to indicate which node is a flight component
          * @type {string}
          */
-        COMPONENT_SELECTOR = ".js-flight-component",
+        COMPONENT_SELECTOR = ".js-fc",
 
         /**
          * The value of the component name data attribute
          * @type {string}
          */
-        COMPONENT_NAME_ATTR = "component",
+        COMPONENT_NAME_ATTR = "fc",
 
         /**
          * The string length of the component name data attribute
@@ -42,7 +42,7 @@ WicketFlightManager = (function (Wicket, $) {
      * The attributes must start with component-MY_PROPERTY
      *
      * @example
-     * <div class="m-mycomponent js-flight-component" data-component="mycomponent" data-component-customproperty="500">
+     * <div class="m-mycomponent js-fc" data-fc="mycomponent" data-fc-customproperty="500">
      *     Component content
      * </div>
      *
@@ -51,7 +51,7 @@ WicketFlightManager = (function (Wicket, $) {
      * this.attr.customproperty
      *
      * @example
-     * <div class="m-mycomp2 js-flight-component" data-component="mycomp2" data-component-custom-property-with-minus="500">
+     * <div class="m-mycomp2 js-fc" data-fc="mycomp2" data-fc-custom-property-with-minus="500">
      *     Component content
      * </div>
      *
@@ -69,7 +69,7 @@ WicketFlightManager = (function (Wicket, $) {
         for (key in options) {
             // jQuery's data() method includes data-* attributes, changing the
             // name from hyphenation to camel case, omitting the "data" part.
-            // e.g. data-component-foo-bar -> componentFooBar
+            // e.g. data-fc-foo-bar -> componentFooBar
             // We want to go one step further and remove the "component" part as
             // well.
             // e.g. componentFooBar -> fooBar
@@ -93,7 +93,7 @@ WicketFlightManager = (function (Wicket, $) {
      * via 'this'.
      */
     function attachComponentElement() {
-        var name = this.getAttribute("data-component");
+        var name = this.getAttribute("data-fc");
 
         if (components.hasOwnProperty(name)) {
             components[name].attachTo(this, getDataComponentAttributes(this));

@@ -51,7 +51,7 @@ defineComponent = (function (WicketFlightManager, flight) {
      * with Wicket.
      *
      * @param options.name {string} The components name as used in its
-     *          data-component attribute
+     *          data-fc attribute
      * @param options.mixins {Array} An array of mixin functions as used in
      *          flight
      * @param options.parent {FlightComponent} optional A component to
