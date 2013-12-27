@@ -77,7 +77,7 @@ WicketFlightManager = (function (Wicket, $) {
             if (key.indexOf(COMPONENT_NAME_ATTR) === 0 && key.length > COMPONENT_NAME_ATTR_LENGTH) {
                 // if key starts with "component" and does not equal "component"
 
-                // omit "component" and change first char to lower case
+                // omit "COMPONENT_NAME_ATTR" value and change first char to lower case
                 property = key.charAt(COMPONENT_NAME_ATTR_LENGTH).toLowerCase() +
                            key.substring(COMPONENT_NAME_ATTR_LENGTH + 1);
 
