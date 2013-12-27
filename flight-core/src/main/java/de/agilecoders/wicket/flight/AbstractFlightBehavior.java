@@ -28,7 +28,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
     /**
      * Construct.
      *
-     * @param componentData custom data for the frontend part
+     * @param componentData map of models which are containing data for the flight component default Attributes
      */
     public AbstractFlightBehavior(Map<String, IModel<String>> componentData) {
         this.componentData = componentData;

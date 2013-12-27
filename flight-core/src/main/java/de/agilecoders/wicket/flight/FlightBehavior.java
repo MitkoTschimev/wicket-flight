@@ -26,7 +26,7 @@ public abstract class FlightBehavior extends AbstractFlightBehavior {
      * Construct.
      *
      * @param flightComponentName the name of the flight component
-     * @param componentData       custom data for the frontend part
+     * @param componentData       map of models which are containing data for the flight component default Attributes
      */
     public FlightBehavior(String flightComponentName, Map<String, IModel<String>> componentData) {
         super(componentData);
