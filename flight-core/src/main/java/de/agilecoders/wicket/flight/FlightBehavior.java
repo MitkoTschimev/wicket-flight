@@ -76,6 +76,12 @@ public class FlightBehavior extends AbstractFlightBehavior {
             return this;
         }
 
+        /**
+         * The css resource is loaded with the same class name like the wicket component
+         * from the same package hierarchy
+         *
+         * @return
+         */
         public Builder withCssResourceReference() {
             this.cssResourceReference = new CssResourceReference(component.getClass(), componentName + ".css");
             return this;
@@ -86,6 +92,12 @@ public class FlightBehavior extends AbstractFlightBehavior {
             return this;
         }
 
+        /**
+         * The javascript resource is loaded with the same class name like the wicket component
+         * from the same package hierarchy
+         *
+         * @return
+         */
         public Builder withJsResourceReference() {
             this.jsResourceReference = new JavaScriptResourceReference(component.getClass(), componentName + ".js");
             return this;
