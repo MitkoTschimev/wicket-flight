@@ -104,7 +104,9 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * @param component current assigned component
      * @return the flight component name
      */
-    protected abstract String getComponentName(Component component);
+    protected String getComponentName(Component component) {
+        return component.getClass().getSimpleName();
+    }
 
 
     /**
@@ -113,5 +115,5 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * @param component current assigned component
      * @param response  current header response
      */
-    protected void addComponentResourceReferences(Component component, IHeaderResponse response) {}
+    protected abstract void addComponentResourceReferences(Component component, IHeaderResponse response);
 }

@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * A behaviour to connect wicket components with flight components.
  */
-public class FlightBehavior extends AbstractFlightBehavior {
+public abstract class FlightBehavior extends AbstractFlightBehavior {
 
     public static Builder newBuilder(Component component) {
         return new Builder(Args.notNull(component, "component"));
@@ -45,7 +45,7 @@ public class FlightBehavior extends AbstractFlightBehavior {
 
     @Override
     protected String getComponentName(Component component) {
-        return this.flightComponentName;
+        return flightComponentName;
     }
 
     public static final class Builder {
@@ -106,8 +106,12 @@ public class FlightBehavior extends AbstractFlightBehavior {
         public FlightBehavior build() {
             return new FlightBehavior(componentName, componentData) {
                 @Override
+                protected String getComponentName(Component component) {
+                    return componentName;
+                }
+
+                @Override
                 protected void addComponentResourceReferences(Component component, IHeaderResponse response) {
-                    super.addComponentResourceReferences(component, response);
 
                     if (cssResourceReference != null) {
                         response.render(CssHeaderItem.forReference(cssResourceReference));
