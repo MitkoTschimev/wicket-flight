@@ -1,6 +1,6 @@
 package de.agilecoders.wicket;
 
-import de.agilecoders.wicket.flight.util.WicketFlight;
+import de.agilecoders.wicket.flight.WicketFlight;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
