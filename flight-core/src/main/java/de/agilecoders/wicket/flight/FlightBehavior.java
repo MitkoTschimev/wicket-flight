@@ -9,7 +9,6 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.lang.Args;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -29,7 +28,7 @@ public class FlightBehavior extends AbstractFlightBehavior {
      * @param flightComponentName the name of the flight component
      */
     public FlightBehavior(String flightComponentName) {
-        this(flightComponentName, Collections.<String, IModel<String>>emptyMap());
+        this(flightComponentName, null);
     }
 
     /**
