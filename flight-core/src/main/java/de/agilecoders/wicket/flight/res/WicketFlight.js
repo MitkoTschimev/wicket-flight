@@ -96,7 +96,7 @@ WicketFlightManager = (function (Wicket, $) {
         var name = this.getAttribute("data-fc"),
             component;
 
-        if(typeof requirejs == "undefined") {
+        if(window.requirejs === undefined) {
             component = window[name];
         } else {
             component = require(name);
