@@ -7,33 +7,26 @@
  * This labels uses css3 to roll if you hover it
  */
 
-GlowingLabel = (function ($, defineComponent) {
+GlowingLabel = (function ($, flight) {
 
-    /**
-     * @constructor
-     */
-    return defineComponent({
-        name: "GlowingLabel",
-        mixins: [
+    function GlowingLabel () {
 
-            function () {
+        /**
+         * @param {Event} event
+         */
+        this.onHover = function(event) {
+            this.$node.toggleClass("glow");
+        };
 
-                /**
-                 * @param {Event} event
-                 */
-                this.onHover = function(event) {
-                    this.$node.toggleClass("glow");
-                };
+        /**
+         * Initialize and bind events
+         */
+        this.after("initialize", function () {
+            this.on("mouseover", this.onHover);
+            this.on("mouseout", this.onHover);
+        });
+    };
 
-                /**
-                 * Initialize and bind events
-                 */
-                this.after("initialize", function () {
-                    this.on("mouseover", this.onHover);
-                    this.on("mouseout", this.onHover);
-                });
-            }
-        ]
-    });
+    return flight.component(GlowingLabel);
 
-}(jQuery, defineComponent));
+}(jQuery, flight));

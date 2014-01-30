@@ -40,7 +40,6 @@ public class WicketFlightJavascriptReference extends JavaScriptResourceReference
         final List<HeaderItem> dependencies = Lists.newArrayList(super.getDependencies());
 
         dependencies.add(JavaScriptHeaderItem.forReference(Holder.flight));
-        dependencies.add(JavaScriptHeaderItem.forReference(WicketFlightManagerJavascriptReference.instance()));
 
         return dependencies;
     }
