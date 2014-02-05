@@ -1,10 +1,10 @@
 package de.agilecoders.wicket.flight.example.email;
 
+import de.agilecoders.wicket.components.ui.composebox.ComposeBox;
+import de.agilecoders.wicket.components.ui.mailitems.MailItemsTable;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import de.agilecoders.wicket.components.ui.ComposeBox;
-import de.agilecoders.wicket.components.ui.MailItemsTable;
 
 public class HomePage extends WebPage {
     private static final long serialVersionUID = 1L;

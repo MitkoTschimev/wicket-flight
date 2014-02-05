@@ -1,4 +1,4 @@
-package de.agilecoders.wicket.components.ui;
+package de.agilecoders.wicket.components.ui.composebox;
 
 import de.agilecoders.wicket.flight.FlightBehavior;
 import de.agilecoders.wicket.requirejs.AmdModuleHeaderItem;
@@ -14,7 +14,7 @@ public class ComposeBox extends Panel {
         super(id);
 
         JavaScriptResourceReference reference = new JavaScriptResourceReference(ComposeBox.class, "ComposeBox.js");
-        AmdModuleHeaderItem item = AmdModuleHeaderItem.forReference(reference, "compose_box");
+        AmdModuleHeaderItem item = AmdModuleHeaderItem.forReference(reference, "ComposeBox");
 
         add(FlightBehavior.newBuilder(this)
                 .withComponentSource("wicket!" + item.getName())
