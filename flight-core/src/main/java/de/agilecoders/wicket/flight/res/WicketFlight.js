@@ -53,9 +53,6 @@ WicketFlight = (function (Wicket, $) {
     }
 
     /**
-     *
-     */
-    /**
      * Defines the WicketFlightCoreMixins which contains the core logic to work with wicket together
      * @returns {[FlightMixins]}
      */
