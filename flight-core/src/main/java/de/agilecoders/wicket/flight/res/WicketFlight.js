@@ -40,11 +40,35 @@ WicketFlight = (function (Wicket, $) {
         COMPONENT_CUSTOM_DATA_PREFIX_LENGTH = COMPONENT_CUSTOM_DATA_PREFIX.length,
 
         /**
-         * TODO: the right path for the compose? how can i combine it with requirejs....
-         *
          * @type {exports}
          */
-        defineComponent = withRequireJs() ? require("flight/lib/component") : flight.component;
+        defineComponent = withRequireJs() ? require("flight/lib/component") : flight.component,
+        addMixins = withRequireJs() ? require("flight/lib/compose").mixin : flight.compose.mixin,
+        wicketFlightCoreComponent = null;
+
+
+    /**
+     * WicketFlight core component contains the core logic to work with wicket together
+     */
+    wicketFlightCoreComponent = defineComponent(function() {
+        this.after("initialize", function () {
+            /**
+             * Cleanup an instance if wicket is removing the dom element
+             */
+            this.on("teardown",
+                /**
+                 * @param {Event} event
+                 * @param {boolean} bubbleUp Teardown should bubble up
+                 */
+                function (event, bubbleUp) {
+                    this.teardown();
+                    if(!bubbleUp) {
+                        event.stopPropagation();
+                    }
+                }
+            );
+        });
+    });
 
     function withRequireJs() {
         return window.requirejs !== undefined;
@@ -118,34 +142,13 @@ WicketFlight = (function (Wicket, $) {
     }
 
     /**
-     * Teardown mixin to call teardown for the special component over an event.
-     * Otherwise we can't delete the special component completely with the connected bindings
-     */
-    function teardownMixin() {
-        this.after("initialize", function () {
-            this.on("teardown",
-            /**
-             * @param {Event} event
-             * @param {boolean} bubbleUp Teardown should bubble up
-             */
-            function (event, bubbleUp) {
-                this.teardown();
-                if(!bubbleUp) {
-                    event.stopPropagation();
-                    }
-                }
-            );
-        });
-    }
-
-    /**
      * Creates the component with the wicketflight core mixins
      *
      * @param {function} component
      * @returns {FlightComponent}
      */
-    function createComponentWithWicketFlightCoreMixins(component) {
-        return defineComponent(component, teardownMixin);
+    function addWicketFlightCoreComponent(component) {
+        addMixins(component, [wicketFlightCoreComponent]);
     }
 
     /**
@@ -163,7 +166,7 @@ WicketFlight = (function (Wicket, $) {
         }
 
         if (component) {
-            component = createComponentWithWicketFlightCoreMixins(component);
+            addWicketFlightCoreComponent(component);
             component.attachTo(this, getDataComponentAttributes(this));
         } else {
             throw new Error("Component can't be attached", source);

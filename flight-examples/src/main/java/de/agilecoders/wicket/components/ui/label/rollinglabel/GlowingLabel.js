@@ -7,7 +7,7 @@
  * This labels uses css3 to roll if you hover it
  */
 
-GlowingLabel = (function ($) {
+GlowingLabel = (function ($, defineComponent) {
 
     function GlowingLabel () {
 
@@ -27,6 +27,6 @@ GlowingLabel = (function ($) {
         });
     };
 
-    return GlowingLabel;
+    return defineComponent(GlowingLabel);
 
-}(jQuery));
+}(jQuery, flight.component));
