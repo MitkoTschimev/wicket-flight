@@ -4,7 +4,8 @@ define(
 
   [
     'flight/lib/component',
-    './with_select'
+//    './../../../../../../webapp/app/component_ui/with_select'
+      'app/component_ui/with_select'
   ],
 
   function(defineComponent, withSelect) {

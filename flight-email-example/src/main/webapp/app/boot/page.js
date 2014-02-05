@@ -6,7 +6,7 @@ define(
     'app/component_data/mail_items',
     'app/component_data/compose_box',
     'app/component_data/move_to',
-    'app/component_ui/mail_items',
+    'wicket!mail_items',
     'app/component_ui/mail_controls',
     'wicket!compose_box',
     'app/component_ui/folders',
