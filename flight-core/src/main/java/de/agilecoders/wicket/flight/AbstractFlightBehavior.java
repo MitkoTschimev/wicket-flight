@@ -38,7 +38,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
         super.bind(component);
 
         if (component.getApplication().usesDevelopmentConfig()) {
-            Names.assertValid(getComponentName(component));
+            Names.assertValid(getComponentSource(component));
         }
     }
 
@@ -50,7 +50,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
     protected void addCustomComponentData(ComponentTag tag) {
         if (componentData != null) {
             for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-                tag.append(Names.COMPONENT_DATA_ATTRIBUTE_NAME + "-" + entry.getKey(),
+                tag.append(Names.COMPONENT_CUSTOM_DATA_ATTRIBUTE_PREFIX + "-" + entry.getKey(),
                            entry.getValue().getObject(), Names.CLASS_NAME_SPLITTER);
             }
         }
@@ -63,7 +63,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * @param tag       the component tag of assigned component
      */
     protected void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
-        tag.put(Names.COMPONENT_DATA_ATTRIBUTE_NAME, getComponentName(component));
+        tag.put(Names.COMPONENT_DATA_ATTRIBUTE_SOURCE, getComponentSource(component));
     }
 
     @Override
@@ -104,7 +104,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * @param component current assigned component
      * @return the flight component name
      */
-    protected String getComponentName(Component component) {
+    protected String getComponentSource(Component component) {
         return component.getClass().getSimpleName();
     }
 

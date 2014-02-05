@@ -1,11 +1,17 @@
 /*jslint browser:true, forin:true, nomen:true, plusplus:true, sloppy:true, maxlen:120, indent:4 */
-/*global Wicket:false, jQuery:false, WicketFlightManager:true */
+/*global Wicket:false, jQuery:false, WicketFlight:true */
 
-/* requires component markup <div class="js-fc" data-fc="ComponentX"></div>
- * requires registration WicketFlightManager.registerComponent("ComponentX", ComponentX);
+/**
+ * requires component markup
+ *
+ * with flight standalone:
+ *      <div class="js-fc" data-fcs="GlobalComponentFunction"></div>
+ *
+ * with requirejs:
+ *      <div class="js-fc" data-fcs="path/to/component/file"></div>
  */
 
-WicketFlightManager = (function (Wicket, $) {
+WicketFlight = (function (Wicket, $) {
     var components = {},
 
         /**
@@ -15,25 +21,40 @@ WicketFlightManager = (function (Wicket, $) {
         COMPONENT_SELECTOR = ".js-fc",
 
         /**
-         * The value of the component name / requirejs path data attribute
+         * The value of the flight component source  data attribute
          * @type {string}
          */
-        COMPONENT_NAME_ATTR = "fc",
+        COMPONENT_SOURCE_ATTR = "fcs",
 
         /**
-         * The string length of the component name data attribute
+         * Prefix for the flight component custom data
+         *
+         * @type {string}
+         */
+        COMPONENT_CUSTOM_DATA_PREFIX = "fc",
+
+        /**
+         * The string length of the component custom data prefix data attribute
          * @type {number}
          */
-        COMPONENT_NAME_ATTR_LENGTH = COMPONENT_NAME_ATTR.length;
+        COMPONENT_CUSTOM_DATA_PREFIX_LENGTH = COMPONENT_CUSTOM_DATA_PREFIX.length,
+
+        /**
+         * TODO: the right path for the compose? how can i combine it with requirejs....
+         *
+         * @type {exports}
+         */
+        defineComponent = withRequireJs() ? require("flight/lib/component") : flight.component;
+
+    function withRequireJs() {
+        return window.requirejs !== undefined;
+    }
 
     /*
      * Finds all elements that denote a component.
      */
     function getComponentElements(element) {
-        var root = $(element),
-            elements = root.find(COMPONENT_SELECTOR).add(root.filter(COMPONENT_SELECTOR));
-
-        return elements;
+        return $(element).find(COMPONENT_SELECTOR).addBack(COMPONENT_SELECTOR);
     }
 
     /**
@@ -74,12 +95,10 @@ WicketFlightManager = (function (Wicket, $) {
             // well.
             // e.g. fcFooBar -> fooBar
 
-            if (key.indexOf(COMPONENT_NAME_ATTR) === 0 && key.length > COMPONENT_NAME_ATTR_LENGTH) {
-                // if key starts with "fc" and does not equal "fc"
-
+            if (isCustomDataAttribute(key)) {
                 // omit "COMPONENT_NAME_ATTR" value and change first char to lower case
-                property = key.charAt(COMPONENT_NAME_ATTR_LENGTH).toLowerCase() +
-                           key.substring(COMPONENT_NAME_ATTR_LENGTH + 1);
+                property = key.charAt(COMPONENT_CUSTOM_DATA_PREFIX_LENGTH).toLowerCase() +
+                           key.substring(COMPONENT_CUSTOM_DATA_PREFIX_LENGTH + 1);
 
                 componentAttributes[property] = options[key];
             }
@@ -89,23 +108,65 @@ WicketFlightManager = (function (Wicket, $) {
     }
 
     /**
+     * Returns true if the key is an custom data attribute for flight components
+     *
+     * @param {string} key
+     * @returns {boolean}
+     */
+    function isCustomDataAttribute(key) {
+        return key.indexOf(COMPONENT_CUSTOM_DATA_PREFIX) === 0 && key.indexOf(COMPONENT_SOURCE_ATTR) === -1;
+    }
+
+    /**
+     * Teardown mixin to call teardown for the special component over an event.
+     * Otherwise we can't delete the special component completely with the connected bindings
+     */
+    function teardownMixin() {
+        this.after("initialize", function () {
+            this.on("teardown",
+            /**
+             * @param {Event} event
+             * @param {boolean} bubbleUp Teardown should bubble up
+             */
+            function (event, bubbleUp) {
+                this.teardown();
+                if(!bubbleUp) {
+                    event.stopPropagation();
+                    }
+                }
+            );
+        });
+    }
+
+    /**
+     * Creates the component with the wicketflight core mixins
+     *
+     * @param {function} component
+     * @returns {FlightComponent}
+     */
+    function createComponentWithWicketFlightCoreMixins(component) {
+        return defineComponent(component, teardownMixin);
+    }
+
+    /**
      * Attach a single element to its component. The element is passed in
      * via 'this'.
      */
     function attachComponentElement() {
-        var name = this.getAttribute("data-fc"),
+        var source = this.getAttribute("data-" + COMPONENT_SOURCE_ATTR),
             component;
 
-        if(window.requirejs === undefined) {
-            component = window[name];
+        if(withRequireJs()) {
+            component = require(source);
         } else {
-            component = require(name);
+            component = window[source];
         }
 
         if (component) {
+            component = createComponentWithWicketFlightCoreMixins(component);
             component.attachTo(this, getDataComponentAttributes(this));
         } else {
-            throw new Error("Component can't be attached", name);
+            throw new Error("Component can't be attached", source);
         }
     }
 
@@ -171,13 +232,4 @@ WicketFlightManager = (function (Wicket, $) {
             components[name].teardownAll();
         }
     });
-
-    return {
-        "registerComponent": function (name, component) {
-            components[name] = component;
-        },
-        "getComponent": function (name) {
-            return components[name] || null;
-        }
-    };
 }(Wicket, jQuery));
