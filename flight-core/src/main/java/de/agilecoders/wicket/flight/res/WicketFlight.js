@@ -42,8 +42,8 @@ WicketFlight = (function (Wicket, $) {
         /**
          * @type {exports}
          */
-        defineComponent = withRequireJs() ? require("flight/lib/component") : flight.component,
-        addMixins = withRequireJs() ? require("flight/lib/compose").mixin : flight.compose.mixin,
+        defineComponent = withRequireJs() ? require(["flight/lib/component"]) : flight.component,
+        addMixins = withRequireJs() ? require(["flight/lib/compose"]).mixin : flight.compose.mixin,
         wicketFlightCoreComponent = null;
 
 
