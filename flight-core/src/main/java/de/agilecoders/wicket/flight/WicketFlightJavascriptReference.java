@@ -50,7 +50,6 @@ public class WicketFlightJavascriptReference extends JavaScriptResourceReference
         }
 
         dependencies.add(JavaScriptHeaderItem.forReference(Holder.flight));
-        dependencies.add(JavaScriptHeaderItem.forReference(WicketFlightManagerJavascriptReference.instance()));
 
         return dependencies;
     }

@@ -26,7 +26,7 @@ public class FlightJavascriptReference extends JQueryPluginResourceReference {
      * Construct.
      */
     public FlightJavascriptReference() {
-        super(FlightJavascriptReference.class, "res/flight.js");
+        super(FlightJavascriptReference.class, "res/flight.standalone.js");
     }
 
     @Override

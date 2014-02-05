@@ -14,55 +14,55 @@ import java.util.Map;
 /**
  * A behaviour to connect wicket components with flight components.
  */
-public class FlightBehavior extends AbstractFlightBehavior {
+public abstract class FlightBehavior extends AbstractFlightBehavior {
 
     public static Builder newBuilder(Component component) {
         return new Builder(Args.notNull(component, "component"));
     }
 
-    private final String flightComponentName;
+    private final String flightComponentSource;
 
     /**
      * Construct, uses an empty custom component data map.
      *
-     * @param flightComponentName the name of the flight component
+     * @param flightComponentSource the name of the flight component
      */
-    public FlightBehavior(String flightComponentName) {
-        this(flightComponentName, null);
+    public FlightBehavior(String flightComponentSource) {
+        this(flightComponentSource, null);
     }
 
     /**
      * Construct.
      *
-     * @param flightComponentName the name of the flight component
+     * @param flightComponentSource the name of the flight component
      * @param componentData       map of models which are containing data for the flight component default Attributes
      */
-    public FlightBehavior(String flightComponentName, Map<String, IModel<String>> componentData) {
+    public FlightBehavior(String flightComponentSource, Map<String, IModel<String>> componentData) {
         super(componentData);
 
-        this.flightComponentName = flightComponentName;
+        this.flightComponentSource = flightComponentSource;
     }
 
     @Override
-    protected String getComponentName(Component component) {
-        return this.flightComponentName;
+    protected String getComponentSource(Component component) {
+        return flightComponentSource;
     }
 
     public static final class Builder {
 
         private final Component component;
-        private String componentName = null;
+        private String componentSource = null;
         private CssResourceReference cssResourceReference = null;
         private JavaScriptHeaderItem jsHeaderItem = null;
         private Map<String, IModel<String>> componentData = null;
 
         private Builder(Component component) {
             this.component = component;
-            this.componentName = component.getClass().getSimpleName();
+            this.componentSource = component.getClass().getSimpleName();
         }
 
-        public Builder withComponentName(final String name) {
-            this.componentName = name;
+        public Builder withComponentSource(final String source) {
+            this.componentSource = source;
             return this;
         }
 
@@ -83,7 +83,7 @@ public class FlightBehavior extends AbstractFlightBehavior {
          * @return
          */
         public Builder withCssResourceReference() {
-            this.cssResourceReference = new CssResourceReference(component.getClass(), componentName + ".css");
+            this.cssResourceReference = new CssResourceReference(component.getClass(), componentSource + ".css");
             return this;
         }
 
@@ -100,16 +100,20 @@ public class FlightBehavior extends AbstractFlightBehavior {
          */
         public Builder withJsHeaderItem() {
             JavaScriptResourceReference reference =
-                    new JavaScriptResourceReference(component.getClass(), componentName + ".js");
+                    new JavaScriptResourceReference(component.getClass(), componentSource + ".js");
             this.jsHeaderItem = JavaScriptHeaderItem.forReference(reference);
             return this;
         }
 
         public FlightBehavior build() {
-            return new FlightBehavior(componentName, componentData) {
+            return new FlightBehavior(componentSource, componentData) {
+                @Override
+                protected String getComponentSource(Component component) {
+                    return componentSource;
+                }
+
                 @Override
                 protected void addComponentResourceReferences(Component component, IHeaderResponse response) {
-                    super.addComponentResourceReferences(component, response);
 
                     if (cssResourceReference != null) {
                         response.render(CssHeaderItem.forReference(cssResourceReference));
