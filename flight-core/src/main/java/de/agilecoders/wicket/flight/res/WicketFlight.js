@@ -142,29 +142,32 @@ WicketFlight = (function (Wicket, $) {
     }
 
     /**
-     * Creates the component with the wicketflight core mixins
+     * Creates the component with the wicketflight core component
      *
      * @param {function} component
-     * @returns {FlightComponent}
      */
     function addWicketFlightCoreComponent(component) {
         addMixins(component, [wicketFlightCoreComponent]);
     }
 
     /**
+     * Loads the component source and attaches it to the element
+     */
+    function loadComponentAndAttach() {
+        var source = this.getAttribute("data-" + COMPONENT_SOURCE_ATTR);
+
+        if(withRequireJs()) {
+            require([source], attachComponentElement.bind(this));
+        } else {
+            attachComponentElement.apply(this, [window[source]]);
+        }
+    }
+
+    /**
      * Attach a single element to its component. The element is passed in
      * via 'this'.
      */
-    function attachComponentElement() {
-        var source = this.getAttribute("data-" + COMPONENT_SOURCE_ATTR),
-            component;
-
-        if(withRequireJs()) {
-            component = require(source);
-        } else {
-            component = window[source];
-        }
-
+    function attachComponentElement(component) {
         if (component) {
             addWicketFlightCoreComponent(component);
             component.attachTo(this, getDataComponentAttributes(this));
@@ -180,7 +183,7 @@ WicketFlight = (function (Wicket, $) {
     function attachAllComponentElements(element) {
         var componentElements = getComponentElements(element);
 
-        componentElements.each(attachComponentElement);
+        componentElements.each(loadComponentAndAttach);
     }
 
     /**
