@@ -1,14 +1,16 @@
 package de.agilecoders.wicket.flight;
 
-import de.agilecoders.wicket.flight.util.Names;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
-import java.util.Map;
+import de.agilecoders.wicket.flight.util.Names;
 
 /**
  * @author mtschimev
@@ -50,10 +52,30 @@ public abstract class AbstractFlightBehavior extends Behavior {
     protected void addCustomComponentData(ComponentTag tag) {
         if (componentData != null) {
             for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-                tag.append(Names.COMPONENT_CUSTOM_DATA_ATTRIBUTE_PREFIX + "-" + entry.getKey(),
+                CharSequence key = camelCaseToDash(entry.getKey());
+                tag.append(Names.COMPONENT_CUSTOM_DATA_ATTRIBUTE_PREFIX + "-" + key,
                            entry.getValue().getObject(), Names.CLASS_NAME_SPLITTER);
             }
         }
+    }
+
+    private CharSequence camelCaseToDash(String key) {
+        Args.notNull(key, "key");
+
+        StringBuilder result = new StringBuilder(key.length() + 4);
+
+        for (int i = 0; i < key.length(); i++) {
+            char c = key.charAt(i);
+            if (c == '-') {
+                throw new IllegalArgumentException("Component data should not use '-' in its name: " + key);
+            } else if (Character.isUpperCase(c)) {
+                result.append('-').append(Character.toLowerCase(c));
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result;
     }
 
     /**
