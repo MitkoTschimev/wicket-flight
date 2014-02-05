@@ -1,7 +1,7 @@
 package de.agilecoders.wicket.components.ui;
 
 import de.agilecoders.wicket.flight.FlightBehavior;
-import de.agilecoders.wicket.requirejs.AmdJavaScriptHeaderItem;
+import de.agilecoders.wicket.requirejs.AmdModuleHeaderItem;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -19,7 +19,7 @@ public class MailItemsTable extends Panel {
         super(id);
 
         JavaScriptResourceReference reference = new JavaScriptResourceReference(MailItemsTable.class, "mail_items.js");
-        AmdJavaScriptHeaderItem item = AmdJavaScriptHeaderItem.forReference(reference, "mail_items");
+        AmdModuleHeaderItem item = AmdModuleHeaderItem.forReference(reference, "mail_items");
 
         Map<String, IModel<String>> map = new HashMap<>();
         map.put("itemContainerSelector", Model.of("#mail_items_TB"));
