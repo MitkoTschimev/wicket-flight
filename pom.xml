@@ -11,6 +11,7 @@
     <modules>
         <module>flight-core</module>
         <module>flight-examples</module>
+        <module>flight-email-example</module>        
     </modules>
 
     <groupId>de.agilecoders.wicket</groupId>
@@ -44,12 +45,12 @@
             <dependency>
                 <groupId>de.agilecoders.wicket</groupId>
                 <artifactId>wicket-flight</artifactId>
-                <version>0.1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.agilecoders.wicket</groupId>
                 <artifactId>wicket-flight-samples</artifactId>
-                <version>0.1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

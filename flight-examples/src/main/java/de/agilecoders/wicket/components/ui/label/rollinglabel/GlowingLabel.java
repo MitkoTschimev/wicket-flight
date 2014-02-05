@@ -14,7 +14,7 @@ public class GlowingLabel extends Label {
 
         add(FlightBehavior.newBuilder(this)
                     .withCssResourceReference()
-                    .withJsResourceReference()
+                    .withJsHeaderItem()
                     .build());
     }
 }

@@ -23,6 +23,7 @@
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>
             <artifactId>wicket-webjars</artifactId>
+            <version>0.3.4</version>
         </dependency>
 
         <!-- TWITTER FLIGHT DEPENDENCIES -->
@@ -30,6 +31,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>flight</artifactId>
             <version>1.0.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.agilecoders.wicket.requirejs</groupId>
+            <artifactId>wicket-requirejs</artifactId>
+            <version>0.1.2-SNAPSHOT</version>
         </dependency>
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->

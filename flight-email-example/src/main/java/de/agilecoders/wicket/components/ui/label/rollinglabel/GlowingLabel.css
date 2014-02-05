@@ -1,0 +1,82 @@
+.glow {
+    /*display: inline;*/
+    /*padding: 8px;*/
+
+    /*font: 1em/1.5em Helvetica, Arial;*/
+    color: white;
+    letter-spacing: 1px;
+    background-color: #9a0a11;
+
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    -o-border-radius:6px;
+    border-radius:6px;
+
+    -webkit-animation: glowIt 2s infinite;
+    -moz-animation: glowIt 2s infinite;
+    -o-animation: glowIt 2s infinite;
+    animation: glowIt 2s infinite;
+}
+
+
+/* key-frame-animations */
+
+
+@-webkit-keyframes glowIt {
+    0% {
+        background-color: #9a890b;
+        -webkit-box-shadow: 0 0 9px #ccc;
+    }
+    50% {
+        background-color: #84bd2e;
+        -webkit-box-shadow: 0 0 18px #91bd09;
+    }
+    100% {
+        background-color: #9a0a11;
+        -webkit-box-shadow: 0 0 9px #ccc; }
+}
+
+
+@-moz-keyframes glowIt {
+    0% {
+        background-color: #9a890b;
+        -moz-box-shadow: 0 0 9px #ccc;
+    }
+    50% {
+        background-color: #84bd2e;
+        -moz-box-shadow: 0 0 18px #91bd09;
+    }
+    100% {
+        background-color: #9a0a11;
+        -moz-box-shadow: 0 0 9px #ccc; }
+}
+
+
+@-o-keyframes glowIt {
+    0% {
+        background-color: #9a890b;
+        -o-box-shadow: 0 0 9px #ccc;
+    }
+    50% {
+        background-color: #84bd2e;
+        -o-box-shadow: 0 0 18px #91bd09;
+    }
+    100% {
+        background-color: #9a0a11;
+        -o-box-shadow: 0 0 9px #ccc; }
+}
+
+
+@keyframes glowIt {
+    0% {
+        background-color: #9a890b;
+        box-shadow: 0 0 9px #ccc;
+    }
+    50% {
+        background-color: #84bd2e;
+        box-shadow: 0 0 18px #91bd09;
+    }
+    100% {
+        background-color: #9a0a11;
+        box-shadow: 0 0 9px #ccc; }
+}
