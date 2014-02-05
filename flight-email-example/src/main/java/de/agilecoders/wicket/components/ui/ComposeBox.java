@@ -17,6 +17,7 @@ public class ComposeBox extends Panel {
         AmdJavaScriptHeaderItem item = AmdJavaScriptHeaderItem.forReference(reference, "compose_box");
 
         add(FlightBehavior.newBuilder(this)
+                .withComponentSource("wicket!" + item.getName())
                     .withJsHeaderItem(item)
                     .build());
     }

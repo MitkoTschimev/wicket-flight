@@ -1,12 +1,12 @@
 package de.agilecoders.wicket.flight;
 
-import de.agilecoders.wicket.requirejs.RequireJsResourceReference;
-import org.apache.wicket.markup.head.HeaderItem;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.resource.JQueryPluginResourceReference;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
+
+import de.agilecoders.wicket.requirejs.RequireJsHeaderItem;
 
 /**
  * Extends the defineComponent method from flight with the possibility to extend components and mixins
@@ -33,7 +33,7 @@ public class FlightJavascriptReference extends JQueryPluginResourceReference {
     public Iterable<? extends HeaderItem> getDependencies() {
         List<HeaderItem> dependencies = new ArrayList<>();
 
-        dependencies.add(JavaScriptHeaderItem.forReference(new RequireJsResourceReference()));
+        dependencies.add(new RequireJsHeaderItem());
 
         return dependencies;
     }

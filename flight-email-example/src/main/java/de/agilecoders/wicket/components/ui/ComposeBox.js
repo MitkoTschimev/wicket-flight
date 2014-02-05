@@ -2,15 +2,11 @@
 
 define(
 
-  [
-    'flight/lib/component'
-  ],
+  [],
 
-  function(defineComponent) {
+  function() {
 
-    return defineComponent(composeBox);
-
-    function composeBox() {
+    return function composeBox() {
 
       this.defaultAttrs({
         newMailType: 'newMail',

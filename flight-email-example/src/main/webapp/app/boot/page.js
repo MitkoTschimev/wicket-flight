@@ -6,9 +6,9 @@ define(
     'app/component_data/mail_items',
     'app/component_data/compose_box',
     'app/component_data/move_to',
-    'wicket!mail_items',
+//    'wicket!mail_items',
     'app/component_ui/mail_controls',
-    'wicket!compose_box',
+//    'wicket!compose_box',
     'app/component_ui/folders',
     'app/component_ui/move_to_selector'
   ],
@@ -17,9 +17,9 @@ define(
     MailItemsData,
     ComposeBoxData,
     MoveToData,
-    MailItemsUI,
+//    MailItemsUI,
     MailControlsUI,
-    ComposeBoxUI,
+//    ComposeBoxUI,
     FoldersUI,
     MoveToSelectorUI) {
 
@@ -29,12 +29,12 @@ define(
         selectedFolders: ['inbox']
       });
       MoveToData.attachTo(document);
-      MailItemsUI.attachTo('#mail_items', {
-        itemContainerSelector: '#mail_items_TB',
-        selectedFolders: ['inbox']
-      });
+//      MailItemsUI.attachTo('#mail_items', {
+//        itemContainerSelector: '#mail_items_TB',
+//        selectedFolders: ['inbox']
+//      });
       MailControlsUI.attachTo('#mail_controls');
-      ComposeBoxUI.attachTo('#compose_box');
+//      ComposeBoxUI.attachTo('#compose_box');
       FoldersUI.attachTo('#folders');
       MoveToSelectorUI.attachTo('#move_to_selector', {
         moveActionSelector: '#move_mail',

@@ -3,8 +3,7 @@
 define(
 
   [
-    'flight/lib/component',
-//    './../../../../../../webapp/app/component_ui/with_select'
+      'flight/lib/component',
       'app/component_ui/with_select'
   ],
 

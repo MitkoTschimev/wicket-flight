@@ -13,7 +13,7 @@ public class GlowingLabel extends Label {
         super(id, label);
 
         add(FlightBehavior.newBuilder(this)
-                    .withComponentName("wicket!label")
+                    .withComponentSource("wicket!label")
                     .withCssResourceReference()
                     .withJsHeaderItem()
                     .build());

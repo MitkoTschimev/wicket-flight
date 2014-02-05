@@ -160,7 +160,7 @@ WicketFlight = (function (Wicket, $) {
             component;
 
         if(withRequireJs()) {
-            component = require(source);
+            component = require([source]);
         } else {
             component = window[source];
         }
