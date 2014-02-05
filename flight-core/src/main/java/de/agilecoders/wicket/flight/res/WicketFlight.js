@@ -168,11 +168,13 @@ WicketFlight = (function (Wicket, $) {
      * via 'this'.
      */
     function attachComponentElement(component) {
+        var source = this.getAttribute("data-" + COMPONENT_SOURCE_ATTR);
+
         if (component) {
             addWicketFlightCoreComponent(component);
             component.attachTo(this, getDataComponentAttributes(this));
         } else {
-            throw new Error("Component can't be attached", source);
+            throw new Error("Component can't be attached: " + source);
         }
     }
 
