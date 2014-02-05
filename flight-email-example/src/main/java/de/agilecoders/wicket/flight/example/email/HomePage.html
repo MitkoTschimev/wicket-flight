@@ -20,12 +20,7 @@
 
                         <br><br>
 
-                        <ul id="folders" class="nav nav-list">
-                            <li class="folder-item selected" id="inbox"><i class="icon-folder-close"></i> Inbox</li>
-                            <li class="folder-item" id="later"><i class="icon-folder-close"></i> Later</li>
-                            <li class="folder-item" id="sent"><i class="icon-share-alt"></i> Sent</li>
-                            <li class="folder-item" id="trash"><i class="icon-trash"></i> Trash</li>
-                        </ul>
+                        <ul wicket:id="folders" class="nav nav-list"></ul>
                     </div>
                 </div>
 
@@ -50,7 +45,6 @@
 
         <div id="move_to_selector" class="move-to-selector hide"></div>
 
-        <!--<wicket:container wicket:id="requireJsConfig"></wicket:container>-->
         <!--<script src="bower_components/es5-shim/es5-shim.js"></script>-->
         <!--<script src="bower_components/es5-shim/es5-sham.js"></script>-->
         <script>

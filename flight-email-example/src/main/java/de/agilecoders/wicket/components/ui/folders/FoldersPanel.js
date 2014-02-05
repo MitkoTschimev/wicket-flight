@@ -4,7 +4,7 @@ define(
 
   [
     'flight/lib/component',
-    './with_select'
+    'app/component_ui/with_select'
   ],
 
   function(defineComponent, withSelect) {
