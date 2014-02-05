@@ -38,9 +38,14 @@ WicketFlight = (function (Wicket, $) {
         COMPONENT_CUSTOM_DATA_PREFIX_LENGTH = COMPONENT_CUSTOM_DATA_PREFIX.length,
 
         /**
-         * @type {exports}
+         * @type {FlightComponentModule}
          */
-        defineComponent, addMixins, wicketFlightCoreComponent = null;
+        defineComponent,
+
+        /**
+         * @type {FlightComposeModule}
+         */
+        addMixins;
 
 
     function withRequireJs() {
@@ -48,28 +53,34 @@ WicketFlight = (function (Wicket, $) {
     }
 
     /**
-     * Defines the WicketFlightCoreComponent which contains the core logic to work with wicket together
+     *
      */
-    function defineWicketFlightCoreComponent() {
-        wicketFlightCoreComponent = defineComponent(function() {
-            this.after("initialize", function () {
-                /**
-                 * Cleanup an instance if wicket is removing the dom element
-                 */
-                this.on("teardown",
+    /**
+     * Defines the WicketFlightCoreMixins which contains the core logic to work with wicket together
+     * @returns {[FlightMixins]}
+     */
+    function getWicketFlightCoreMixins() {
+        return [
+            function wicketFlightCoreTeardown() {
                 /**
                  * @param {Event} event
                  * @param {boolean} bubbleUp Teardown should bubble up
                  */
-                function (event, bubbleUp) {
+                this.teardownWicketFlightComponentInstance = function(event, bubbleUp) {
                     this.teardown();
                     if(!bubbleUp) {
                         event.stopPropagation();
                     }
-                }
-                );
-            });
-        });
+                };
+
+                this.after("initialize", function () {
+                    /**
+                     * Cleanup an instance if wicket is removing the dom element
+                     */
+                    this.on("teardown", this.teardownWicketFlightComponentInstance);
+                });
+            }
+        ];
     }
 
     /**
@@ -140,12 +151,12 @@ WicketFlight = (function (Wicket, $) {
     }
 
     /**
-     * Creates the component with the wicketflight core component
+     * Adds the wicket flight core mixins to the component
      *
-     * @param {function} component
+     * @param {FlightComponent} component
      */
-    function addWicketFlightCoreComponent(component) {
-        addMixins(component, [wicketFlightCoreComponent]);
+    function addWicketFlightCoreMixins(component) {
+        addMixins(component.prototype, getWicketFlightCoreMixins());
     }
 
     /**
@@ -169,7 +180,7 @@ WicketFlight = (function (Wicket, $) {
         var source = this.getAttribute("data-" + COMPONENT_SOURCE_ATTR);
 
         if (component) {
-            addWicketFlightCoreComponent(component);
+            addWicketFlightCoreMixins(component);
             component.attachTo(this, getDataComponentAttributes(this));
         } else {
             throw new Error("Component can't be attached: " + source);
@@ -225,8 +236,6 @@ WicketFlight = (function (Wicket, $) {
         defineComponent = component;
         addMixins = compose.mixin;
 
-        defineWicketFlightCoreComponent();
-
         // Attach all component elements to their components on startup
         $(function () {
             attachAllComponentElements(document.body);
@@ -250,5 +259,7 @@ WicketFlight = (function (Wicket, $) {
 
     // Detach all component elements from their instances and remove
     // the instances on unload
-    // TODO: Detach all
+    $(window).on("unload", function () {
+        $(COMPONENT_SELECTOR).trigger("teardown");
+    });
 }(Wicket, jQuery));
