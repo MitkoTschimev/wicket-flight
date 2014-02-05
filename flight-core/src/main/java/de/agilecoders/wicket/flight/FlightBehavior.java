@@ -53,7 +53,7 @@ public class FlightBehavior extends AbstractFlightBehavior {
         private final Component component;
         private String componentName = null;
         private CssResourceReference cssResourceReference = null;
-        private JavaScriptResourceReference jsResourceReference = null;
+        private JavaScriptHeaderItem jsHeaderItem = null;
         private Map<String, IModel<String>> componentData = null;
 
         private Builder(Component component) {
@@ -87,8 +87,8 @@ public class FlightBehavior extends AbstractFlightBehavior {
             return this;
         }
 
-        public Builder withJsResourceReference(final JavaScriptResourceReference reference) {
-            this.jsResourceReference = reference;
+        public Builder withJsHeaderItem(final JavaScriptHeaderItem item) {
+            this.jsHeaderItem = item;
             return this;
         }
 
@@ -98,8 +98,10 @@ public class FlightBehavior extends AbstractFlightBehavior {
          *
          * @return
          */
-        public Builder withJsResourceReference() {
-            this.jsResourceReference = new JavaScriptResourceReference(component.getClass(), componentName + ".js");
+        public Builder withJsHeaderItem() {
+            JavaScriptResourceReference reference =
+                    new JavaScriptResourceReference(component.getClass(), componentName + ".js");
+            this.jsHeaderItem = JavaScriptHeaderItem.forReference(reference);
             return this;
         }
 
@@ -113,8 +115,8 @@ public class FlightBehavior extends AbstractFlightBehavior {
                         response.render(CssHeaderItem.forReference(cssResourceReference));
                     }
 
-                    if (jsResourceReference != null) {
-                        response.render(JavaScriptHeaderItem.forReference(jsResourceReference));
+                    if (jsHeaderItem != null) {
+                        response.render(jsHeaderItem);
                     }
                 }
             };
