@@ -216,7 +216,7 @@ WicketFlight = (function (Wicket, $) {
     Wicket.Event.subscribe("/dom/node/added", addNode);
 
     /**
-     * Initialize the
+     * Initialize the flight modules
      *
      * @param component The flight component module
      * @param compose The flight compose module
