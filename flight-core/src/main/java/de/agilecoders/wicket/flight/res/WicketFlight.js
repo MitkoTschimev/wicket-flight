@@ -12,9 +12,7 @@
  */
 
 WicketFlight = (function (Wicket, $) {
-    var components = {},
-
-        /**
+    var /**
          * The selector to indicate which node is a flight component
          * @type {string}
          */
@@ -47,6 +45,31 @@ WicketFlight = (function (Wicket, $) {
 
     function withRequireJs() {
         return window.requirejs !== undefined;
+    }
+
+    /**
+     * Defines the WicketFlightCoreComponent which contains the core logic to work with wicket together
+     */
+    function defineWicketFlightCoreComponent() {
+        wicketFlightCoreComponent = defineComponent(function() {
+            this.after("initialize", function () {
+                /**
+                 * Cleanup an instance if wicket is removing the dom element
+                 */
+                this.on("teardown",
+                /**
+                 * @param {Event} event
+                 * @param {boolean} bubbleUp Teardown should bubble up
+                 */
+                function (event, bubbleUp) {
+                    this.teardown();
+                    if(!bubbleUp) {
+                        event.stopPropagation();
+                    }
+                }
+                );
+            });
+        });
     }
 
     /**
@@ -192,33 +215,17 @@ WicketFlight = (function (Wicket, $) {
     //Subscribe addNode function to event /dom/node/removing
     Wicket.Event.subscribe("/dom/node/added", addNode);
 
-
-
-    function initWicketFlightComponent(component, compose) {
+    /**
+     * Initialize the
+     *
+     * @param component The flight component module
+     * @param compose The flight compose module
+     */
+    function initWicketFlightModules(component, compose) {
         defineComponent = component;
         addMixins = compose.mixin;
-        /**
-         * WicketFlight core component contains the core logic to work with wicket together
-         */
-        wicketFlightCoreComponent = defineComponent(function() {
-            this.after("initialize", function () {
-                /**
-                 * Cleanup an instance if wicket is removing the dom element
-                 */
-                this.on("teardown",
-                /**
-                 * @param {Event} event
-                 * @param {boolean} bubbleUp Teardown should bubble up
-                 */
-                function (event, bubbleUp) {
-                    this.teardown();
-                    if(!bubbleUp) {
-                        event.stopPropagation();
-                    }
-                }
-                );
-            });
-        });
+
+        defineWicketFlightCoreComponent();
 
         // Attach all component elements to their components on startup
         $(function () {
@@ -236,9 +243,9 @@ WicketFlight = (function (Wicket, $) {
     //});
 
     if(withRequireJs()) {
-        require(["flight/lib/component", "flight/lib/compose"], initWicketFlightComponent);
+        require(["flight/lib/component", "flight/lib/compose"], initWicketFlightModules);
     } else {
-        initWicketFlightComponent(flight.component, flight.compose);
+        initWicketFlightModules(flight.component, flight.compose);
     }
 
     // Detach all component elements from their instances and remove
