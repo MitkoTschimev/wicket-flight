@@ -48,8 +48,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
     /**
      * Adds the required identifier attributes which are necessary to work with the flight manager
      *
-     * @param component
-     * @param tag
+     * @param component the component the component tag belongs to
+     * @param tag component tag
      */
     private void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
         String componentName = getComponentName(component);
@@ -77,7 +77,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
 
         response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
         response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getWicketEventReference()));
-        response.render(JavaScriptHeaderItem.forReference(WicketFlightJavascriptReference.instance()));
+        response.render(JavaScriptHeaderItem.forReference(WicketFlight.settings(component.getApplication()).wicketFlightJavaScriptResourceReference()));
+
         addComponentResourceReferences(component, response);
     }
 
@@ -93,8 +94,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
     /**
      * Returns the name for the flight component
      *
-     * @param component
-     * @return
+     * @param component current assigned component
+     * @return the flight component name
      */
     protected abstract String getComponentName(Component component);
 
@@ -102,8 +103,8 @@ public abstract class AbstractFlightBehavior extends Behavior {
     /**
      * Adds the css and javascript references for the flight component
      *
-     * @param component
-     * @param response
+     * @param component current assigned component
+     * @param response  current header response
      */
     protected abstract void addComponentResourceReferences(Component component, IHeaderResponse response);
 }
