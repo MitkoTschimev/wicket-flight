@@ -19,9 +19,4 @@ public interface IWicketFlightSettings {
      */
     ResourceReference wicketFlightJavaScriptResourceReference();
 
-    /**
-     * @return the wicket-flight manager javascript resource reference
-     */
-    ResourceReference wicketFlightManagerJavaScriptResourceReference();
-
 }
