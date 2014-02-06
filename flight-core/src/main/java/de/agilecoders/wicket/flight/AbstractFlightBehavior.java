@@ -1,15 +1,16 @@
 package de.agilecoders.wicket.flight;
 
-import de.agilecoders.wicket.flight.util.WicketBehaviorUtils;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
-import java.util.Collections;
-import java.util.Map;
+import de.agilecoders.wicket.flight.util.Names;
 
 /**
  * @author mtschimev
@@ -22,7 +23,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * Construct, uses an empty custom component data map.
      */
     public AbstractFlightBehavior() {
-        this(Collections.<String, IModel<String>>emptyMap());
+        this(null);
     }
 
     /**
@@ -34,38 +35,64 @@ public abstract class AbstractFlightBehavior extends Behavior {
         this.componentData = componentData;
     }
 
+    @Override
+    public void bind(Component component) {
+        super.bind(component);
+
+        if (component.getApplication().usesDevelopmentConfig()) {
+            Names.assertValid(getComponentSource(component));
+        }
+    }
+
     /**
      * Converts the map to html data attributes for the flight component
      *
-     * @param tag
+     * @param tag the component tag of assigned component
      */
     protected void addCustomComponentData(ComponentTag tag) {
-        for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-            tag.append("data-fc-" + entry.getKey(), entry.getValue().getObject(), " ");
+        if (componentData != null) {
+            for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
+                CharSequence key = camelCaseToDash(entry.getKey());
+                tag.append(Names.COMPONENT_CUSTOM_DATA_ATTRIBUTE_PREFIX + "-" + key,
+                           entry.getValue().getObject(), Names.CLASS_NAME_SPLITTER);
+            }
         }
+    }
+
+    private CharSequence camelCaseToDash(String key) {
+        Args.notNull(key, "key");
+
+        StringBuilder result = new StringBuilder(key.length() + 4);
+
+        for (int i = 0; i < key.length(); i++) {
+            char c = key.charAt(i);
+            if (c == '-') {
+                throw new IllegalArgumentException("Component data should not use '-' in its name: " + key);
+            } else if (Character.isUpperCase(c)) {
+                result.append('-').append(Character.toLowerCase(c));
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result;
     }
 
     /**
      * Adds the required identifier attributes which are necessary to work with the flight manager
      *
-     * @param component the component the component tag belongs to
-     * @param tag component tag
+     * @param component current assigned component
+     * @param tag       the component tag of assigned component
      */
-    private void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
-        String componentName = getComponentName(component);
-
-        if (component.getApplication().usesDevelopmentConfig()) {
-            WicketBehaviorUtils.assertCamelCase(componentName);
-        }
-
-        tag.put("data-fc", componentName);
+    protected void addRequiredComponentIdentifierAttributes(Component component, ComponentTag tag) {
+        tag.put(Names.COMPONENT_DATA_ATTRIBUTE_SOURCE, getComponentSource(component));
     }
 
     @Override
     public void onComponentTag(Component component, ComponentTag tag) {
         super.onComponentTag(component, tag);
 
-        tag.append("class", "js-fc", " ");
+        tag.append("class", Names.JS_CLASS_NAME, Names.CLASS_NAME_SPLITTER);
 
         addRequiredComponentIdentifierAttributes(component, tag);
         addCustomComponentData(tag);
@@ -75,8 +102,6 @@ public abstract class AbstractFlightBehavior extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
-        response.render(JavaScriptHeaderItem.forReference(component.getApplication().getJavaScriptLibrarySettings().getWicketEventReference()));
         response.render(JavaScriptHeaderItem.forReference(WicketFlight.settings(component.getApplication()).wicketFlightJavaScriptResourceReference()));
 
         addComponentResourceReferences(component, response);
@@ -86,8 +111,10 @@ public abstract class AbstractFlightBehavior extends Behavior {
     public void detach(Component component) {
         super.detach(component);
 
-        for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
-            entry.getValue().detach();
+        if (componentData != null) {
+            for (Map.Entry<String, IModel<String>> entry : componentData.entrySet()) {
+                entry.getValue().detach();
+            }
         }
     }
 
@@ -97,7 +124,9 @@ public abstract class AbstractFlightBehavior extends Behavior {
      * @param component current assigned component
      * @return the flight component name
      */
-    protected abstract String getComponentName(Component component);
+    protected String getComponentSource(Component component) {
+        return component.getClass().getSimpleName();
+    }
 
 
     /**

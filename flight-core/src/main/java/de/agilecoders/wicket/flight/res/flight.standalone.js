@@ -1008,15 +1008,17 @@
     // ==========================================
     define('lib/index', [
         './advice',
+        './debug',
         './component',
         './compose',
         './logger',
         './registry',
         './utils'
-    ], function (advice, component, compose, logger, registry, utils) {
+    ], function (advice, debug, component, compose, logger, registry, utils) {
         'use strict';
         return {
             advice: advice,
+            debug: debug,
             component: component,
             compose: compose,
             logger: logger,
