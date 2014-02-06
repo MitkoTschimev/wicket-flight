@@ -3,10 +3,13 @@ package de.agilecoders.wicket.flight.settings;
 import com.google.common.collect.Lists;
 import de.agilecoders.wicket.flight.WicketFlight;
 import de.agilecoders.wicket.requirejs.RequireJsHeaderItem;
+import org.apache.wicket.Application;
+import org.apache.wicket.ajax.WicketEventJQueryResourceReference;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,16 @@ public class WicketFlightSettings implements IWicketFlightSettings {
             @Override
             public Iterable<? extends HeaderItem> getDependencies() {
                 final List<HeaderItem> dependencies = Lists.newArrayList(super.getDependencies());
+
+                if (Application.exists()) {
+                    IJavaScriptLibrarySettings javaScriptLibrarySettings = Application.get().getJavaScriptLibrarySettings();
+                    dependencies.add(JavaScriptHeaderItem.forReference(javaScriptLibrarySettings.getWicketEventReference()));
+                } else {
+                    dependencies.add(JavaScriptHeaderItem.forReference(WicketEventJQueryResourceReference.get()));
+                }
+
                 dependencies.add(JavaScriptHeaderItem.forReference(flightJavaScriptResourceReference()));
+
                 return dependencies;
             }
         };
