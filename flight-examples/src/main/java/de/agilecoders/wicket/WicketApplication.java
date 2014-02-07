@@ -23,7 +23,6 @@ public class WicketApplication extends WebApplication {
     public void init() {
         super.init();
 
-
         WicketFlight.install(this);
     }
 }

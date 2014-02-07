@@ -102,7 +102,7 @@ public abstract class AbstractFlightBehavior extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.render(JavaScriptHeaderItem.forReference(WicketFlightJavascriptReference.instance()));
+        response.render(JavaScriptHeaderItem.forReference(WicketFlight.settings(component.getApplication()).wicketFlightJavaScriptResourceReference()));
 
         addComponentResourceReferences(component, response);
     }
