@@ -52,6 +52,11 @@
                 <artifactId>wicket-flight-samples</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>de.agilecoders.wicket.webjars</groupId>
+                <artifactId>wicket-webjars</artifactId>
+                <version>0.4.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

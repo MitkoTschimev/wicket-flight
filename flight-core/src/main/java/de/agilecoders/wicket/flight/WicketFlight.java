@@ -5,6 +5,7 @@ import de.agilecoders.wicket.flight.settings.WicketFlightSettings;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Helper class for wicket flight and webjars resources
@@ -22,7 +23,7 @@ public final class WicketFlight {
      * @param app the wicket application
      */
     public static void install(final Application app) {
-        install(app, new WicketFlightSettings());
+        install(app, null);
     }
 
     /**
@@ -32,10 +33,16 @@ public final class WicketFlight {
      * @param settings the settings to use
      */
     public static void install(final Application app, IWicketFlightSettings settings) {
-        if (settings(app) == null) {
-            app.setMetaData(METADATA_KEY, settings);
+        Args.notNull(app, "application");
 
+        if (settings(app) == null) {
             WicketWebjars.install(app);
+
+            if (settings == null) {
+                settings = new WicketFlightSettings();
+            }
+
+            app.setMetaData(METADATA_KEY, settings);
         }
     }
 

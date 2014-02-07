@@ -23,14 +23,13 @@
         <dependency>
             <groupId>de.agilecoders.wicket.webjars</groupId>
             <artifactId>wicket-webjars</artifactId>
-            <version>0.4.0</version>
         </dependency>
 
         <!-- TWITTER FLIGHT DEPENDENCIES -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>flight</artifactId>
-            <version>1.0.9</version>
+            <version>1.1.2-1</version>
         </dependency>
 
         <dependency>
